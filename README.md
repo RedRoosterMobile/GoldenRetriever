@@ -35,3 +35,10 @@ When you look at the historic silver price, you'll find that when the ratio is l
 ## Ideas
 
 Make it run as a cronjob, that writes the value into a text file, and display it's value in your console. Feel free to save the data and refine the algorithm further by changes in percent and so on but don't forget to backtest it.
+
+Maybe on put SELL when ration is below 50 and falling for a 'while'. Use common sense and other inicators like:
+
+https://www.macrotrends.net/2577/sp-500-pe-ratio-price-to-earnings-chart
+yield curve
+.. check macrotrends
+
