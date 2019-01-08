@@ -41,5 +41,6 @@ Maybe on put SELL when ration is below 50 and falling for a 'while'. Use common 
 - https://www.macrotrends.net/2577/sp-500-pe-ratio-price-to-earnings-chart
 - https://www.macrotrends.net/1486/fed-balance-sheet-vs-gold-price
 - https://stockcharts.com/freecharts/yieldcurve.php
+- https://www.macrotrends.net/2485/gold-to-monetary-base-ratio
 .. check macrotrends
 
