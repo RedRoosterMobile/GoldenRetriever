@@ -8,6 +8,10 @@ It uses the gold/silver ratio as an indicator.
 
 https://www.macrotrends.net/1441/gold-to-silver-ratio
 
+goldSilverRatio100Years.png
+![alt goldSilverRatio100Years](https://github.com/RedRoosterMobile/GoldenRetriever/blob/master/goldSilverRatio100Years.png)
+
+
 Historically the ratio is at 1:15. This means you have to put 15 ounces of silver on the table to get one ounce of gold.
 
 - When ratio is above 80, **BUY**
