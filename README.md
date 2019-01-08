@@ -23,7 +23,8 @@ When you look at the historic silver price, you'll find that when the ratio is l
 
 ## Run
 
-`node index.js`
+- `brew install curl`
+- `node index.js`
 
 ## Ideas
 
