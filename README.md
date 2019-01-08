@@ -39,6 +39,7 @@ Make it run as a cronjob, that writes the value into a text file, and display it
 Maybe on put SELL when ration is below 50 and falling for a 'while'. Use common sense and other inicators like:
 
 https://www.macrotrends.net/2577/sp-500-pe-ratio-price-to-earnings-chart
+https://www.macrotrends.net/1486/fed-balance-sheet-vs-gold-price
 yield curve
 .. check macrotrends
 
