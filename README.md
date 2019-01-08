@@ -19,13 +19,13 @@ When you look at the historic silver price, you'll find that when the ratio is l
 
 ## Install
 
-`yarn install`
+- `yarn install`
+- `brew install curl`
 
 ## Run
 
-- `brew install curl`
 - `node index.js`
 
 ## Ideas
 
-Make it run as a cronjob, that writes the value into a text file, and display it's value in your console
+Make it run as a cronjob, that writes the value into a text file, and display it's value in your console. Feel free to save the data and refine the algorithm further by changes in percent and so on but don't forget to backtest it.
