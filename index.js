@@ -1,4 +1,5 @@
 const cheerio = require('cheerio')
+// const { execSync } = require('child_process');
 
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
@@ -71,6 +72,7 @@ const algorithm = (currentRatio, goldPrice, silverPrice) => {
     }
 
     console.log(values);
+
     
     if (currentRatio > 79) {
         console.log('BUY');
@@ -80,6 +82,14 @@ const algorithm = (currentRatio, goldPrice, silverPrice) => {
         console.log('SELL');
     } else {
         console.log('PARSING ERROR?');
+    }
+
+    // alert
+    if (goldPrice < 1493) {
+        console.log('HEDGE NOW');
+        const cert= `https://kunde.comdirect.de/inf/zertifikate/selector/hebel/trefferliste.html?KNOCK_OUT_ABS_TO=1530&ID_NOTATION_UNDERLYING=1326189&ID_GROUP_ISSUER=&DIFFERENCE_KNOCKOUT_COMPARATOR=gt&PRESELECTION=BEAR&DIFFERENCE_KNOCKOUT_VALUE=&DIFFERENCE_KNOCKOUT_PCT_COMPARATOR=gt&PRICE_VALUE=&SEARCH_VALUE=&DIFFERENCE_KNOCKOUT_PCT_VALUE=&UNDERLYING_NAME_SEARCH=GOLD&PREMIUM_COMPARATOR=gt&DATE_TIME_MATURITY_FROM=Range_NOW&GEARING_ASK_COMPARATOR=gt&DATE_TIME_MATURITY_TO=Range_ENDLESS&SUBCATEGORY_APPLICATION=HEBEL&GEARING_ASK_VALUE=&PREMIUM_VALUE=&PRICE_COMPARATOR=gt&KNOCK_OUT_ABS_FROM=1493`;
+        console.log(cert);
+        exec('say  Short gold now!', maxBuffer);
     }
 
 }
