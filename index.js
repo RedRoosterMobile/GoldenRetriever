@@ -1,5 +1,7 @@
+
+// https://github.com/pilwon/node-yahoo-finance
 const cheerio = require('cheerio')
-// const { execSync } = require('child_process');
+const yahooFinance = require('yahoo-finance')
 
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
@@ -14,10 +16,8 @@ const getGoldPrice = async () => {
 }
 
 const getSilverPrice = async () => {
-    const { stdout, stderr } = await exec('curl https://www.apmex.com/spotprices/silver-prices', maxBuffer);
-    const $ = cheerio.load(stdout);
-    const currentSp = $('body > main > div > div > div.spotprice-header > div > div > div.ny-spot-price > div.spotprice-content-block > table > tbody > tr:nth-child(1) > td.text-right > span').text()
-    return parseFloat(currentSp.replace('$',''));
+    const gld = await yahooFinance.quote('SI=F');
+    return gld.price.regularMarketPrice
 }
 
 const getCurrentRatio = async () => {
@@ -83,17 +83,24 @@ const algorithm = (currentRatio, goldPrice, silverPrice) => {
     } else {
         console.log('PARSING ERROR?');
     }
+}
 
-    // alert
-    if (goldPrice < 1493) {
-        console.log('HEDGE NOW');
+getGoldSilverRatio();
+
+async function shouldIShortGold() {
+    const gld = await yahooFinance.quote('GC=F');
+    console.log('GOLD FUTURES: ' + gld.price.regularMarketPrice);
+    if (gld.price.regularMarketPrice < 1495) {
+        console.log('HEDGE GOLD NOW!');
         const cert= `https://kunde.comdirect.de/inf/zertifikate/selector/hebel/trefferliste.html?KNOCK_OUT_ABS_TO=1530&ID_NOTATION_UNDERLYING=1326189&ID_GROUP_ISSUER=&DIFFERENCE_KNOCKOUT_COMPARATOR=gt&PRESELECTION=BEAR&DIFFERENCE_KNOCKOUT_VALUE=&DIFFERENCE_KNOCKOUT_PCT_COMPARATOR=gt&PRICE_VALUE=&SEARCH_VALUE=&DIFFERENCE_KNOCKOUT_PCT_VALUE=&UNDERLYING_NAME_SEARCH=GOLD&PREMIUM_COMPARATOR=gt&DATE_TIME_MATURITY_FROM=Range_NOW&GEARING_ASK_COMPARATOR=gt&DATE_TIME_MATURITY_TO=Range_ENDLESS&SUBCATEGORY_APPLICATION=HEBEL&GEARING_ASK_VALUE=&PREMIUM_VALUE=&PRICE_COMPARATOR=gt&KNOCK_OUT_ABS_FROM=1493`;
         console.log(cert);
         exec('say  Short gold now!', maxBuffer);
     }
-
+    return gld;
+   
 }
 
-getGoldSilverRatio();
+shouldIShortGold();
+
 
 
