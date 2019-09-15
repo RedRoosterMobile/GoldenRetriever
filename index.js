@@ -108,6 +108,7 @@ async function shouldIShortGold() {
         const cert= `https://kunde.comdirect.de/inf/zertifikate/selector/hebel/trefferliste.html?KNOCK_OUT_ABS_TO=1530&ID_NOTATION_UNDERLYING=1326189&ID_GROUP_ISSUER=&DIFFERENCE_KNOCKOUT_COMPARATOR=gt&PRESELECTION=BEAR&DIFFERENCE_KNOCKOUT_VALUE=&DIFFERENCE_KNOCKOUT_PCT_COMPARATOR=gt&PRICE_VALUE=&SEARCH_VALUE=&DIFFERENCE_KNOCKOUT_PCT_VALUE=&UNDERLYING_NAME_SEARCH=GOLD&PREMIUM_COMPARATOR=gt&DATE_TIME_MATURITY_FROM=Range_NOW&GEARING_ASK_COMPARATOR=gt&DATE_TIME_MATURITY_TO=Range_ENDLESS&SUBCATEGORY_APPLICATION=HEBEL&GEARING_ASK_VALUE=&PREMIUM_VALUE=&PRICE_COMPARATOR=gt&KNOCK_OUT_ABS_FROM=1493`;
         console.log(cert);
         exec('say  Short gold now!', maxBuffer);
+        exec('open  '+ cert, maxBuffer);
     }
     return gld;
 }
@@ -119,11 +120,13 @@ async function shouldISellLong(callback , name ,cert, stopLoss, takeProfit = nul
         console.log('SELL '+name.toUpperCase()+' NOW!');
         console.log(cert);
         exec('say sell '+name+' now!', maxBuffer);
+        exec('open  '+ cert, maxBuffer);
     }
     if (takeProfit && price > takeProfit) {
         console.log('SELL '+name.toUpperCase()+' NOW! PROFIT 💰💰💰');
         console.log(cert);
         exec('say take profit. sell '+name+' now!', maxBuffer);
+        exec('open  '+ cert, maxBuffer);
     }
     return price;
 }
@@ -135,11 +138,13 @@ async function shouldISellShort(callback , name ,cert, stopLoss, takeProfit = nu
         console.log('SELL  '+name.toUpperCase()+' NOW!');
         console.log(cert);
         exec('say cover '+name+' short now!', maxBuffer);
+        exec('open  '+ cert, maxBuffer);
     }
     if (takeProfit && price < takeProfit) {
         console.log('SELL '+name.toUpperCase()+' SHORT NOW! PROFIT 💰💰💰');
         console.log(cert);
         exec('say take profit. sell ' + name + ' short now!', maxBuffer);
+        exec('open  '+ cert, maxBuffer);
     }
     return price;
 }
