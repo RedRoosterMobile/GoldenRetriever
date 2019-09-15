@@ -20,6 +20,21 @@ const getSilverPrice = async () => {
     return gld.price.regularMarketPrice
 }
 
+// ?? 
+const getUS02Price = async () => {
+    const response = await yahooFinance.quote('SI=F');
+    return response.price.regularMarketPrice
+}
+const getNetlixPrice = async () => {
+    const response = await yahooFinance.quote('NFLX');
+    return response.price.regularMarketPrice
+}
+
+const getUSOILPrice = async () => {
+    const response = await yahooFinance.quote('Cl=F');
+    return response.price.regularMarketPrice
+}
+
 const getCurrentRatio = async () => {
     const { stdout, stderr } = await exec('curl https://www.bullionbypost.co.uk/price-ratio/gold-silver-ratio-chart/', maxBuffer);
     const $ = cheerio.load(stdout);
@@ -85,8 +100,6 @@ const algorithm = (currentRatio, goldPrice, silverPrice) => {
     }
 }
 
-getGoldSilverRatio();
-
 async function shouldIShortGold() {
     const gld = await yahooFinance.quote('GC=F');
     console.log('GOLD FUTURES: ' + gld.price.regularMarketPrice);
@@ -97,10 +110,48 @@ async function shouldIShortGold() {
         exec('say  Short gold now!', maxBuffer);
     }
     return gld;
-   
 }
 
-shouldIShortGold();
+async function shouldISellLong(callback , name ,cert, stopLoss, takeProfit = null) {
+    const price = await callback();
+    console.log(name.toUpperCase() + ': ' + price);
+    if (price < stopLoss) {
+        console.log('SELL '+name.toUpperCase()+' NOW!');
+        console.log(cert);
+        exec('say sell '+name+' now!', maxBuffer);
+    }
+    if (takeProfit && price > takeProfit) {
+        console.log('SELL '+name.toUpperCase()+' NOW! PROFIT 💰💰💰');
+        console.log(cert);
+        exec('say take profit. sell '+name+' now!', maxBuffer);
+    }
+    return price;
+}
 
+async function shouldISellShort(callback , name ,cert, stopLoss, takeProfit = null) {
+    const price = await callback();
+    console.log(name.toUpperCase() + ': ' + price);
+    if (price > stopLoss) {
+        console.log('SELL  '+name.toUpperCase()+' NOW!');
+        console.log(cert);
+        exec('say cover '+name+' short now!', maxBuffer);
+    }
+    if (takeProfit && price < takeProfit) {
+        console.log('SELL '+name.toUpperCase()+' SHORT NOW! PROFIT 💰💰💰');
+        console.log(cert);
+        exec('say take profit. sell ' + name + ' short now!', maxBuffer);
+    }
+    return price;
+}
 
+//shouldIShortGold();
 
+const netflixCert = `https://kunde.comdirect.de/inf/optionsscheine/detail/uebersicht/uebersicht.html?ID_NOTATION=206053562`;
+const crudeCert   = `https://kunde.comdirect.de/inf/optionsscheine/detail/uebersicht/uebersicht.html?ID_NOTATION=205831865`;
+const silverCert  = 'https://kunde.comdirect.de/inf/optionsscheine/detail/uebersicht/uebersicht.html?ID_NOTATION=205831865';
+
+shouldISellShort(getSilverPrice, 'silver', silverCert, 17.76, 16.86 );
+shouldISellLong(getNetlixPrice, 'netflix', netflixCert, 278.2, 330.0);
+shouldISellLong(getUSOILPrice, 'crude', crudeCert, 53.80, 57.75);
+
+getGoldSilverRatio();
