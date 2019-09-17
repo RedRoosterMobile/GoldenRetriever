@@ -156,7 +156,7 @@ const crudeCert   = `https://kunde.comdirect.de/inf/optionsscheine/detail/uebers
 const silverCert  = 'https://kunde.comdirect.de/inf/optionsscheine/detail/uebersicht/uebersicht.html?ID_NOTATION=205831865';
 
 shouldISellShort(getSilverPrice, 'silver', silverCert, 17.76, 16.86 );
-shouldISellLong(getNetlixPrice, 'netflix', netflixCert, 278.2, 330.0);
-shouldISellLong(getUSOILPrice, 'crude', crudeCert, 53.80, 57.75);
+shouldISellLong(getNetlixPrice, 'netflix', netflixCert, 281.2, 330.0);
+// shouldISellLong(getUSOILPrice, 'crude', crudeCert, 53.80, 57.75);
 
 getGoldSilverRatio();
