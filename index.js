@@ -35,6 +35,11 @@ const getUSOILPrice = async () => {
     return response.price.regularMarketPrice
 }
 
+const getEUBanksPrice = async () => {
+    const response = await yahooFinance.quote('SX7E.Z');
+    return response.price.regularMarketPrice
+}
+
 const getCurrentRatio = async () => {
     const { stdout, stderr } = await exec('curl https://www.bullionbypost.co.uk/price-ratio/gold-silver-ratio-chart/', maxBuffer);
     const $ = cheerio.load(stdout);
@@ -151,12 +156,14 @@ async function shouldISellShort(callback , name ,cert, stopLoss, takeProfit = nu
 
 //shouldIShortGold();
 
-const netflixCert = `https://kunde.comdirect.de/inf/optionsscheine/detail/uebersicht/uebersicht.html?ID_NOTATION=206053562`;
+const netflixCert = `https://kunde.comdirect.de/inf/optionsscheine/detail/uebersicht/uebersicht.html?ID_NOTATION=211784138`;
 const crudeCert   = `https://kunde.comdirect.de/inf/optionsscheine/detail/uebersicht/uebersicht.html?ID_NOTATION=205831865`;
 const silverCert  = 'https://kunde.comdirect.de/inf/optionsscheine/detail/uebersicht/uebersicht.html?ID_NOTATION=205831865';
+const euBanksCert = 'https://kunde.comdirect.de/inf/optionsscheine/detail/uebersicht/uebersicht.html?ID_NOTATION=248408212';
+// shouldISellShort(getSilverPrice, 'silver', silverCert, 17.76, 16.86 );
+shouldISellShort(getNetlixPrice, 'netflix', netflixCert, 300, 250.0);
+shouldISellShort(getEUBanksPrice, 'SX7E', euBanksCert, 95, 70);
 
-shouldISellShort(getSilverPrice, 'silver', silverCert, 17.76, 16.86 );
-shouldISellLong(getNetlixPrice, 'netflix', netflixCert, 281.2, 330.0);
 // shouldISellLong(getUSOILPrice, 'crude', crudeCert, 53.80, 57.75);
 
 getGoldSilverRatio();
