@@ -40,6 +40,15 @@ const getEUBanksPrice = async () => {
     return response.price.regularMarketPrice
 }
 
+const getCoffeePrice = async () => {
+    const response = await yahooFinance.quote('KC=F');
+    return response.price.regularMarketPrice
+}
+const getShopifyPrice = async () => {
+    const response = await yahooFinance.quote('SHOP');
+    return response.price.regularMarketPrice
+}
+
 const getCurrentRatio = async () => {
     const { stdout, stderr } = await exec('curl https://www.bullionbypost.co.uk/price-ratio/gold-silver-ratio-chart/', maxBuffer);
     const $ = cheerio.load(stdout);
@@ -160,10 +169,14 @@ const netflixCert = `https://kunde.comdirect.de/inf/optionsscheine/detail/uebers
 const crudeCert   = `https://kunde.comdirect.de/inf/optionsscheine/detail/uebersicht/uebersicht.html?ID_NOTATION=205831865`;
 const silverCert  = 'https://kunde.comdirect.de/inf/optionsscheine/detail/uebersicht/uebersicht.html?ID_NOTATION=205831865';
 const euBanksCert = 'https://kunde.comdirect.de/inf/optionsscheine/detail/uebersicht/uebersicht.html?ID_NOTATION=248408212';
+const coffeeCert  = 'https://kunde.comdirect.de/inf/optionsscheine/detail/uebersicht/uebersicht.html?ID_NOTATION=256914419';
+const shopifyLongCert  = 'https://kunde.comdirect.de/inf/optionsscheine/detail/uebersicht/uebersicht.html?ID_NOTATION=250238638';
+const shopifyShortCert = 'https://kunde.comdirect.de/inf/optionsscheine/detail/uebersicht/uebersicht.html?ID_NOTATION=266543981';
 // shouldISellShort(getSilverPrice, 'silver', silverCert, 17.76, 16.86 );
-shouldISellShort(getNetlixPrice, 'netflix', netflixCert, 300, 250.0);
+shouldISellShort(getNetlixPrice, 'netflix', netflixCert, 289, 250.0);
 shouldISellShort(getEUBanksPrice, 'SX7E', euBanksCert, 95, 70);
-
-// shouldISellLong(getUSOILPrice, 'crude', crudeCert, 53.80, 57.75);
+shouldISellLong(getCoffeePrice, 'coffee', coffeeCert, 94, 110);
+shouldISellLong(getShopifyPrice, 'shopify', shopifyLongCert, 313, 359);
+// shouldISellShort(getShopifyPrice, 'shopify', shopifyShortCert, 313, 280);
 
 getGoldSilverRatio();
