@@ -173,10 +173,14 @@ const coffeeCert  = 'https://kunde.comdirect.de/inf/optionsscheine/detail/uebers
 const shopifyLongCert  = 'https://kunde.comdirect.de/inf/optionsscheine/detail/uebersicht/uebersicht.html?ID_NOTATION=250238638';
 const shopifyShortCert = 'https://kunde.comdirect.de/inf/optionsscheine/detail/uebersicht/uebersicht.html?ID_NOTATION=266543981';
 // shouldISellShort(getSilverPrice, 'silver', silverCert, 17.76, 16.86 );
-shouldISellShort(getNetlixPrice, 'netflix', netflixCert, 289, 250.0);
+shouldISellShort(getNetlixPrice, 'netflix', netflixCert, 264, 250.0);
 shouldISellShort(getEUBanksPrice, 'SX7E', euBanksCert, 95, 70);
 shouldISellLong(getCoffeePrice, 'coffee', coffeeCert, 94, 110);
-shouldISellLong(getShopifyPrice, 'shopify', shopifyLongCert, 313, 359);
+// MIN profit
+shouldISellShort(getShopifyPrice, 'shopify', shopifyShortCert, 313, 280);
+// MAX profit
+// shouldISellLong(getShopifyPrice, 'shopify', shopifyLongCert, 313, 359);
+
 // shouldISellShort(getShopifyPrice, 'shopify', shopifyShortCert, 313, 280);
 
 getGoldSilverRatio();
