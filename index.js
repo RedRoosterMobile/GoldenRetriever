@@ -1,4 +1,9 @@
 
+const settings = {
+    audio: false,
+    links: false
+};
+
 // https://github.com/pilwon/node-yahoo-finance
 const cheerio = require('cheerio')
 const yahooFinance = require('yahoo-finance')
@@ -46,6 +51,10 @@ const getCoffeePrice = async () => {
 }
 const getShopifyPrice = async () => {
     const response = await yahooFinance.quote('SHOP');
+    return response.price.regularMarketPrice
+}
+const getDisneyPrice = async () => {
+    const response = await yahooFinance.quote('DIS');
     return response.price.regularMarketPrice
 }
 
@@ -121,8 +130,10 @@ async function shouldIShortGold() {
         console.log('HEDGE GOLD NOW!');
         const cert= `https://kunde.comdirect.de/inf/zertifikate/selector/hebel/trefferliste.html?KNOCK_OUT_ABS_TO=1530&ID_NOTATION_UNDERLYING=1326189&ID_GROUP_ISSUER=&DIFFERENCE_KNOCKOUT_COMPARATOR=gt&PRESELECTION=BEAR&DIFFERENCE_KNOCKOUT_VALUE=&DIFFERENCE_KNOCKOUT_PCT_COMPARATOR=gt&PRICE_VALUE=&SEARCH_VALUE=&DIFFERENCE_KNOCKOUT_PCT_VALUE=&UNDERLYING_NAME_SEARCH=GOLD&PREMIUM_COMPARATOR=gt&DATE_TIME_MATURITY_FROM=Range_NOW&GEARING_ASK_COMPARATOR=gt&DATE_TIME_MATURITY_TO=Range_ENDLESS&SUBCATEGORY_APPLICATION=HEBEL&GEARING_ASK_VALUE=&PREMIUM_VALUE=&PRICE_COMPARATOR=gt&KNOCK_OUT_ABS_FROM=1493`;
         console.log(cert);
-        exec('say  Short gold now!', maxBuffer);
-        exec('open  '+ cert, maxBuffer);
+        if (settings.audio)
+            exec('say  Short gold now!', maxBuffer);
+        if (settings.links)
+            exec('open  '+ cert, maxBuffer);
     }
     return gld;
 }
@@ -133,14 +144,18 @@ async function shouldISellLong(callback , name ,cert, stopLoss, takeProfit = nul
     if (price < stopLoss) {
         console.log('SELL '+name.toUpperCase()+' NOW!');
         console.log(cert);
-        exec('say sell '+name+' now!', maxBuffer);
-        exec('open  '+ cert, maxBuffer);
+        if (settings.audio)
+            exec('say sell '+name+' now!', maxBuffer);
+        if (settings.links)
+            exec('open  '+ cert, maxBuffer);
     }
     if (takeProfit && price > takeProfit) {
         console.log('SELL '+name.toUpperCase()+' NOW! PROFIT 💰💰💰');
         console.log(cert);
-        exec('say take profit. sell '+name+' now!', maxBuffer);
-        exec('open  '+ cert, maxBuffer);
+        if (settings.audio)
+            exec('say take profit. sell '+name+' now!', maxBuffer);
+        if (settings.links)
+            exec('open  '+ cert, maxBuffer);
     }
     return price;
 }
@@ -151,14 +166,18 @@ async function shouldISellShort(callback , name ,cert, stopLoss, takeProfit = nu
     if (price > stopLoss) {
         console.log('SELL  '+name.toUpperCase()+' NOW!');
         console.log(cert);
-        exec('say cover '+name+' short now!', maxBuffer);
-        exec('open  '+ cert, maxBuffer);
+        if (settings.audio)
+            exec('say cover '+name+' short now!', maxBuffer);
+        if (settings.links)
+            exec('open  '+ cert, maxBuffer);
     }
     if (takeProfit && price < takeProfit) {
         console.log('SELL '+name.toUpperCase()+' SHORT NOW! PROFIT 💰💰💰');
         console.log(cert);
-        exec('say take profit. sell ' + name + ' short now!', maxBuffer);
-        exec('open  '+ cert, maxBuffer);
+        if (settings.audio)
+            exec('say take profit. sell ' + name + ' short now!', maxBuffer);
+        if (settings.links)
+            exec('open  '+ cert, maxBuffer);
     }
     return price;
 }
@@ -172,14 +191,18 @@ const euBanksCert = 'https://kunde.comdirect.de/inf/optionsscheine/detail/uebers
 const coffeeCert  = 'https://kunde.comdirect.de/inf/optionsscheine/detail/uebersicht/uebersicht.html?ID_NOTATION=256914419';
 const shopifyLongCert  = 'https://kunde.comdirect.de/inf/optionsscheine/detail/uebersicht/uebersicht.html?ID_NOTATION=250238638';
 const shopifyShortCert = 'https://kunde.comdirect.de/inf/optionsscheine/detail/uebersicht/uebersicht.html?ID_NOTATION=266543981';
+const shortDisneyCert = 'https://www.comdirect.de/inf/optionsscheine/detail/uebersicht/uebersicht.html?ID_NOTATION=228971986';
 // shouldISellShort(getSilverPrice, 'silver', silverCert, 17.76, 16.86 );
-shouldISellShort(getNetlixPrice, 'netflix', netflixCert, 264, 250.0);
+
+
 shouldISellShort(getEUBanksPrice, 'SX7E', euBanksCert, 95, 70);
-shouldISellLong(getCoffeePrice, 'coffee', coffeeCert, 94, 110);
-// MIN profit
+shouldISellShort(getNetlixPrice, 'netflix', netflixCert, 264, 250.0);
 shouldISellShort(getShopifyPrice, 'shopify', shopifyShortCert, 313, 280);
-// MAX profit
-// shouldISellLong(getShopifyPrice, 'shopify', shopifyLongCert, 313, 359);
+shouldISellShort(getDisneyPrice, 'disney', shortDisneyCert, 134, 120);
+
+
+shouldISellLong(getCoffeePrice, 'coffee', coffeeCert, 94, 110);
+shouldISellLong(getUSOILPrice, 'crude', crudeCert, 52, 66);
 
 // shouldISellShort(getShopifyPrice, 'shopify', shopifyShortCert, 313, 280);
 
