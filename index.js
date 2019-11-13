@@ -198,7 +198,7 @@ const shortDisneyCert = 'https://www.comdirect.de/inf/optionsscheine/detail/uebe
 shouldISellShort(getEUBanksPrice, 'SX7E', euBanksCert, 95, 70);
 shouldISellShort(getNetlixPrice, 'netflix', netflixCert, 264, 250.0);
 shouldISellShort(getShopifyPrice, 'shopify', shopifyShortCert, 313, 280);
-//shouldISellShort(getDisneyPrice, 'disney', shortDisneyCert, 134, 120);
+// shouldISellShort(getDisneyPrice, 'disney', shortDisneyCert, 134, 120);
 
 
 shouldISellLong(getCoffeePrice, 'coffee', coffeeCert, 94, 110);
